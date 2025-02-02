@@ -1,3 +1,3 @@
 
-export const Backend_URL= "https://second-brain-be.vercel.app"
+export const Backend_URL= "https://second-brain-ten-wheat.vercel.app/"
 

@@ -25,14 +25,21 @@ const Dashboard = () => {
       setFilteredData(contents);
     } else {
       // @ts-ignore
-      setFilteredData(contents.filter(content => content.type === selected.toLowerCase()));
+      setFilteredData(
+        // @ts-ignore
+        contents.filter((content) => content.type === selected.toLowerCase())
+      );
     }
   }, [contents, selected]);
 
   // Close sidebar when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
-      if (sidebarOpen && !event.target.closest(".sidebar-container") && !event.target.closest(".sidebar-toggle")) {
+    const handleClickOutside = (event: any) => {
+      if (
+        sidebarOpen &&
+        !event.target.closest(".sidebar-container") &&
+        !event.target.closest(".sidebar-toggle")
+      ) {
         setSidebarOpen(false);
       }
     };
@@ -43,13 +50,18 @@ const Dashboard = () => {
   return (
     <div className="flex relative">
       {/* Sidebar Toggle */}
-      <div className="md:hidden fixed top-7 left-7 border bg-slate-400 opacity-70 border-b-black rounded p-3 z-50 transition-all sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <div
+        className="md:hidden fixed top-7 left-7 border bg-slate-400 opacity-70 border-b-black rounded p-3 z-50 transition-all sidebar-toggle"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
         <RxHamburgerMenu className="text-white text-2xl" />
       </div>
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-screen w-72 bg-white border-r z-40 transition-transform duration-300 ease-in-out sidebar-container ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        className={`fixed top-0 left-0 h-screen w-72 bg-white border-r z-40 transition-transform duration-300 ease-in-out sidebar-container ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
       >
         <Sidebar selected={selected} setSelected={setSelected} />
       </div>
@@ -107,22 +119,30 @@ const Dashboard = () => {
         </div>
 
         {/* Create Content Modal */}
-        <Createcontentmodel openmode={modelState} closeModel={() => setModelState(false)} />
+        <Createcontentmodel
+          openmode={modelState}
+          closeModel={() => setModelState(false)}
+        />
 
         {/* Notes Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredData.length > 0 ? (
-            filteredData.map(({ type, link, title, subheading, payload, createdAt }, index) => (
-              <Card
-                key={index}
-                type={type}
-                title={title}
-                link={link}
-                Subheading={subheading}
-                payload={payload}
-                date={new Date(createdAt).toISOString().split("T")[0]}
-              />
-            ))
+            filteredData.map(
+              (
+                { type, link, title, subheading, payload, createdAt },
+                index
+              ) => (
+                <Card
+                  key={index}
+                  type={type}
+                  title={title}
+                  link={link}
+                  Subheading={subheading}
+                  payload={payload}
+                  date={new Date(createdAt).toISOString().split("T")[0]}
+                />
+              )
+            )
           ) : (
             <p>No content found for the selected type.</p>
           )}

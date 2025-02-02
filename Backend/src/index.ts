@@ -13,24 +13,28 @@ import DeleteUser from "./routes/delete";
 dotenv.config();
 const app = express();
 
-// Debugging: Log incoming requests
+const FRONTEND_URL = "https://second-brain-76ea.vercel.app";
+
+// Manually set CORS headers for all responses
 app.use((req, res, next) => {
-    console.log(`Incoming Request: ${req.method} ${req.path}`);
+    res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     next();
 });
 
-// CORS Configuration
-const corsOptions = {
-    origin: "https://second-brain-76ea.vercel.app", // Allow only this frontend domain
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
+// CORS middleware
+app.use(cors({
+    origin: FRONTEND_URL,
+    methods: "GET, POST, PUT, DELETE, OPTIONS",
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
-};
-app.use(cors(corsOptions));
+}));
 
-// Handle OPTIONS preflight requests explicitly
+// Handle preflight requests explicitly
 app.options("*", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://second-brain-76ea.vercel.app");
+    res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -42,18 +46,19 @@ app.options("*", (req, res) => {
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.json());
-app.use(cookieParser());
-app.use("/user", SignupRouter);
-app.use("/user", SigninRouter);
-app.use("/user", CreateUser);
-app.use("/user", GetContent);
-app.use("/user", ShareRoute);
-app.use("/user",DeleteUser)
+// API routes
+app.use("/user/signup", SignupRouter);
+app.use("/user/signin", SigninRouter);
+app.use("/user/create", CreateUser);
+app.use("/user/content", GetContent);
+app.use("/user/share", ShareRoute);
+app.use("/user/delete", DeleteUser);
 
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
 
+// Connect to database
 connectToDatabase();

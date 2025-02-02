@@ -114,7 +114,7 @@ const CreateContentModel = ({
               ref={linkRef}
               className="p-2 rounded border border-gray-300"
               type="text"
-              placeholder="Enter Link (Optional)"
+              placeholder="Enter Link (Required for Youtube and Tweets)"
             />
             <textarea
               ref={additionalRef}

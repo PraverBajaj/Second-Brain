@@ -7,8 +7,9 @@ import axios from "axios";
 import { Backend_URL } from "../../config";
 
 
+
 interface CardProps {
-  type: "tweet" | "document" | "link" | "youtube" | "any";
+  type: "tweet" | "document" | "link" | "youtube" | "other";
   title: string;
   link?: string;
   Subheading?: string;
@@ -22,15 +23,19 @@ const icons = {
   document: <FaNoteSticky />,
   youtube: <FaYoutube />,
   link: <FaLink />,
-  any: <GiPerspectiveDiceSixFacesRandom />,
+  other: <GiPerspectiveDiceSixFacesRandom />,
 };
 
 
 const getEmbedUrl = (url: string) => {
-  let match = url.match(/[?&]v=([^&]+)/); 
+  // Match for regular YouTube video URLs (with query params)
+  let match = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?&]+)/);
+
+  // Match for YouTube Live streams (with query params)
   if (!match) {
-    match = url.match(/youtu\.be\/([^?]+)/); 
+    match = url.match(/youtube\.com\/live\/([^?&]+)/);
   }
+
   return match ? `https://www.youtube.com/embed/${match[1]}` : "";
 };
 
@@ -45,13 +50,7 @@ const Card = (props: CardProps) => {
         },withCredentials:true
       })
       console.log("Data deleted successfully")
-    
-      
-      
-      
-      
-      
-      
+
     } catch (error) {
       console.error("Error deleting data:", error);
     }
@@ -85,7 +84,7 @@ const Card = (props: CardProps) => {
       <div className="mt-3 text-gray-700 flex-grow">{props.payload}</div>
 
       {/* YouTube Embed */}
-      {props.type === "youtube" && props.link && props.link.includes("youtube.com/watch?v=") && (
+      {props.type === "youtube" && props.link  && (
         <iframe
           className="w-full h-52 mt-3 rounded-lg"
           src={getEmbedUrl(props.link)}

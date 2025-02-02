@@ -51,10 +51,10 @@ const Dashboard = () => {
     <div className="flex relative">
       {/* Sidebar Toggle */}
       <div
-        className="md:hidden fixed top-7 left-7 border bg-slate-400 opacity-70 border-b-black rounded p-3 z-50 transition-all sidebar-toggle"
+        className="md:hidden fixed top-7 left-7 border bg-[#e1e7ff]  border-[#4f39f6] rounded p-3 z-50 transition-all sidebar-toggle"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
-        <RxHamburgerMenu className="text-white text-2xl" />
+        <RxHamburgerMenu className="text-[#4f39f6] text-2xl" />
       </div>
 
       {/* Sidebar */}
@@ -79,7 +79,7 @@ const Dashboard = () => {
 
         {/* Header (Title + Buttons) */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-semibold mt-18">{selected}</h1>
+          <h1 className="text-3xl font-semibold md:mt-0 mt-18">{selected}</h1>
           <div className="block md:hidden">
             <div className="flex gap-3 mb-12">
               <Button

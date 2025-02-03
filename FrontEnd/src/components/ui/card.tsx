@@ -45,7 +45,7 @@ const Card = (props: CardProps) => {
   async function deletedata() {
     try {
       setIsLoading(true);
-      await axios.delete(`${Backend_URL}/user/deletecontent`, {
+      await axios.delete(`/api/user/deletecontent`, {
         data: { title: props.title },
         withCredentials: true,
       });

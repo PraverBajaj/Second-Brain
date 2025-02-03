@@ -6,7 +6,7 @@ export function useContent() {
 
   const fetchContent = async () => {
     try {
-      const response = await axios.get(`${Backend_URL}/user/getcontent`, {
+      const response = await axios.get(`/api/user/getcontent`, {
         withCredentials: true,
       });
       setContents(response.data.Content);

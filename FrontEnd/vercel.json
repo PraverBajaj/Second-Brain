@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/:path*", 
+        "destination": "https://second-brain-2-n0zo.onrender.com/:path*"
+      }
+    ]
+  }
+  

@@ -37,7 +37,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
     try {
       const contentData = { title, link, payload, subheading, type };
       
-      await axios.post(`${Backend_URL}/user/addcontent`, contentData, {
+      await axios.post(`/api/user/addcontent`, contentData, {
         withCredentials: true,
       });
 

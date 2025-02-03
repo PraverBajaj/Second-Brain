@@ -23,7 +23,7 @@ function SignUp() {
 
     setLoading(true);
     try {
-      await axios.post(`${Backend_URL}/user/signup`, { username, password });
+      await axios.post(`/api/user/signup`, { username, password });
       alert("You have signed up successfully!");
       navigate("/signin");
     } catch (err: any) {

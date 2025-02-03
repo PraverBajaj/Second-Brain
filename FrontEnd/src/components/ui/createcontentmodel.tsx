@@ -19,7 +19,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
 
   const [type, setType] = useState("other");
   const [error, setError] = useState(""); 
-  const [isLoading, setIsLoading] = useState(false); // ✅ Loading state
+  const [isLoading, setIsLoading] = useState(false); 
 
   async function submit() {
     const title = titleRef.current?.value.trim();
@@ -32,7 +32,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
       return;
     }
 
-    setIsLoading(true); // ✅ Start loading
+    setIsLoading(true);
 
     try {
       const contentData = { title, link, payload, subheading, type };
@@ -41,11 +41,11 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
         withCredentials: true,
       });
 
-      setIsLoading(false); // ✅ Stop loading
-      closeModel(); // Close modal on success
+      setIsLoading(false); 
+      closeModel(); 
       setError(""); 
     } catch (error: any) {
-      setIsLoading(false); // ✅ Stop loading on error
+      setIsLoading(false); 
 
       if (error.response?.status === 401) {
         navigate("/signin");
@@ -96,13 +96,13 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
             <input ref={linkRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Link (Required for YouTube and Tweets)" />
             <textarea ref={additionalRef} className="p-2 rounded border border-gray-300" placeholder="Additional Text (Optional)" rows={3}></textarea>
 
-            {/* Submit Button with Loading Effect */}
+           
             <Button
               varient="primary"
-              text={isLoading ? "Submitting..." : "Submit"} // ✅ Change text when loading
+              text={isLoading ? "Submitting..." : "Submit"} 
               size="sm"
               onClick={submit}
-              disabled={isLoading} // ✅ Disable button while loading
+              disabled={isLoading} 
             />
           </div>
         </div>

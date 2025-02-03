@@ -13,7 +13,7 @@ import DeleteUser from "./routes/delete";
 dotenv.config();
 const app = express();
 app.use(cors({
-    origin: "https://second-brain-76ea.vercel.app",
+    origin: "https://second-brain-m29c.vercel.app",
     credentials: true,
 }));
 

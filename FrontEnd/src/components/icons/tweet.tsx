@@ -1,4 +1,4 @@
-const Tweet = () => {
+const Tweet3 = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,4 +11,4 @@ const Tweet = () => {
   );
 };
 
-export default Tweet;
+export default Tweet3;

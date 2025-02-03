@@ -6,6 +6,8 @@ import { PiShareNetworkBold } from "react-icons/pi";
 import axios from "axios";
 import { Backend_URL } from "../../config";
 import { useState } from "react";
+import Tweet3 from "../icons/tweet";
+
 
 
 interface CardProps {
@@ -19,7 +21,7 @@ interface CardProps {
 }
 
 const icons = {
-  tweet: <Tweet tweetId={""} />, // Update this if you have a tweet icon
+  tweet: <Tweet3 />,
   document: <FaNoteSticky />,
   youtube: <FaYoutube />,
   link: <FaLink />,

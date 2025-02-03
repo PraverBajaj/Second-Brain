@@ -4,7 +4,6 @@ import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { MdDeleteOutline } from "react-icons/md";
 import { PiShareNetworkBold } from "react-icons/pi";
 import axios from "axios";
-import { Backend_URL } from "../../config";
 import { useState } from "react";
 import Tweet3 from "../icons/tweet";
 

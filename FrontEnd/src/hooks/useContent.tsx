@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Backend_URL } from "../config";
 export function useContent() {
   const [contents, setContents] = useState([]);
 

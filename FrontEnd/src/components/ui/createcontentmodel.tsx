@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import Button from "./Button";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
-import { Backend_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 
 interface CreateContentModelProps {

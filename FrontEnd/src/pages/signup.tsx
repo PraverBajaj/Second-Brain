@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ArrowRight, Brain, Lock, User } from "lucide-react";
 import { useRef, useState } from "react";
-import { Backend_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {

@@ -85,20 +85,20 @@ const Card = (props: CardProps) => {
         </div>
       </div>
 
-      {/* Main Content Wrapper (Ensures Tweets & Videos Adjust Properly) */}
-      <div className="flex flex-col flex-grow min-h-0">
+      {/* Main Content Wrapper (Flexbox for Proper Layout) */}
+      <div className="flex flex-col flex-grow min-h-0 overflow-hidden">
         {/* Subheading & Payload */}
         <div className="mt-3 text-black text-3xl font-medium">{props.Subheading}</div>
         <div className="mt-3 text-gray-700 flex-grow">{props.payload}</div>
 
-        {/* Tweet Embed */}
+        {/* Tweet Embed (Scrollable if Long) */}
         {props.type === "tweet" && props.link && getTweetId(props.link) && (
-          <div className="w-full mt-3 flex-shrink-0">
+          <div className="w-full mt-3 flex-shrink-0 overflow-auto max-h-[400px]">
             <Tweet tweetId={getTweetId(props.link)!} />
           </div>
         )}
 
-        {/* YouTube Embed */}
+        {/* YouTube Embed (Will Not Push Footer Down) */}
         {props.type === "youtube" && props.link && (
           <div className="w-full mt-3 flex-shrink-0">
             <iframe
@@ -130,5 +130,4 @@ const Card = (props: CardProps) => {
     </div>
   );
 };
-
-export default Card;
+export default Card

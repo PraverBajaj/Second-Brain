@@ -2,7 +2,6 @@ import { FaNoteSticky, FaLink, FaYoutube } from "react-icons/fa6";
 import { Tweet } from "react-twitter-widgets"; // Import Tweet widget
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { MdDeleteOutline } from "react-icons/md";
-import { PiShareNetworkBold } from "react-icons/pi";
 import axios from "axios";
 import { useState } from "react";
 import Tweet3 from "../icons/tweet";

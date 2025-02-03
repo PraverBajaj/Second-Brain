@@ -6,17 +6,23 @@ import Link from "../icons/link";
 import Document from "../icons/document";
 import Other from "../icons/Others";
 import AllNotes from "../icons/allnotes";
+import { IoCloseSharp } from "react-icons/io5";
 
-export const Sidebar = ({ selected, setSelected }:any) => {
+
+export const Sidebar = ({ selected, setSelected ,setSidebarOpen ,sidebarOpen }:any) => {
   return (
     <div className=" h-screen w-72 fixed top-0 left-0 bg-white border border-r-gray-200 border-t-0">
       <div className="hidden md:block">
       <div className="flex items-center pl-3 pt-3">
-        <div className="text-4xl text-[#4f45e4] pr-1.5">
+        <div onClick={() => setSidebarOpen(!sidebarOpen)} className="text-4xl text-[#4f45e4] pr-1.5">
           <LuBrain />
         </div>
         <div className="text-xl font-medium">Second Brain</div>
       </div>
+      </div>
+      <div className="md:hidden fixed top-7 left-7">
+        onClick
+      <IoCloseSharp />
       </div>
 
       <div className="mt-12 md:mt-4 flex flex-col gap-2">

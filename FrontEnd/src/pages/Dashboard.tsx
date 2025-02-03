@@ -51,7 +51,7 @@ const Dashboard = () => {
     <div className="flex relative">
       {/* Sidebar Toggle */}
       <div
-        className="md:hidden fixed top-7 left-7 border bg-[#e1e7ff]  border-[#4f39f6] rounded p-3 z-50 transition-all sidebar-toggle"
+        className="md:hidden top-7 left-7 border bg-[#e1e7ff]  border-[#4f39f6] rounded p-3 z-50 transition-all sidebar-toggle"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         <RxHamburgerMenu className="text-[#4f39f6] text-2xl" />
@@ -63,7 +63,7 @@ const Dashboard = () => {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
-        <Sidebar selected={selected} setSelected={setSelected} />
+        <Sidebar selected={selected} setSelected={setSelected} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen}/>
       </div>
 
       {/* Main Content */}

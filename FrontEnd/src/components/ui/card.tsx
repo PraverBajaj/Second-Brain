@@ -78,9 +78,6 @@ const Card = (props: CardProps) => {
             {isLoading ? "Deleting..." : "Delete"}
             <MdDeleteOutline size={20} />
           </button>
-          <button className="hover:text-blue-500">
-            <PiShareNetworkBold size={20} />
-          </button>
         </div>
       </div>
 

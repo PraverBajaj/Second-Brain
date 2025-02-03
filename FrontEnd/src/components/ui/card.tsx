@@ -7,6 +7,7 @@ import axios from "axios";
 import { Backend_URL } from "../../config";
 import { useState } from "react";
 
+
 interface CardProps {
   type: "tweet" | "document" | "link" | "youtube" | "other";
   title: string;
@@ -18,7 +19,7 @@ interface CardProps {
 }
 
 const icons = {
-  tweet: <FaNoteSticky />, // Update this if you have a tweet icon
+  tweet: <Tweet tweetId={""} />, // Update this if you have a tweet icon
   document: <FaNoteSticky />,
   youtube: <FaYoutube />,
   link: <FaLink />,

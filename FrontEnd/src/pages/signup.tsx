@@ -1,12 +1,13 @@
 import axios from "axios";
 import { ArrowRight, Brain, Lock, User } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Backend_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const UserRef = useRef<HTMLInputElement>(null);
   const PasswordRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   async function signup(event: React.FormEvent) {
@@ -20,22 +21,26 @@ function SignUp() {
       return;
     }
 
+    setLoading(true);
     try {
       await axios.post(`${Backend_URL}/user/signup`, { username, password });
       alert("You have signed up successfully!");
       navigate("/signin");
     } catch (err: any) {
       if (err.response) {
-        if (err.response.status === 403) {
+        const { status, data } = err.response;
+        if (status === 403) {
           alert("Signup failed: User already exists");
-        } else if (err.response.status === 400) {
-          alert("Signup failed: " + err.response.data.errors.join("\n"));
+        } else if (status === 400) {
+          alert("Signup failed: " + (data.errors?.join("\n") || data.error));
         } else {
-          alert("Signup failed: " + err.response.data.error);
+          alert("Signup failed: " + data.error);
         }
       } else {
         alert("Signup failed: " + err.message);
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -51,10 +56,8 @@ function SignUp() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{" "}
-          <Link to="/signin">
-            <button className="font-medium text-indigo-600 hover:text-indigo-500">
-              already have an account
-            </button>
+          <Link to="/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+            already have an account
           </Link>
         </p>
       </div>
@@ -63,10 +66,7 @@ function SignUp() {
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={signup}>
             <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                 Username
               </label>
               <div className="mt-1 relative">
@@ -76,7 +76,6 @@ function SignUp() {
                 <input
                   ref={UserRef}
                   id="username"
-                  name="username"
                   type="text"
                   autoComplete="username"
                   required
@@ -87,10 +86,7 @@ function SignUp() {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1 relative">
@@ -100,7 +96,6 @@ function SignUp() {
                 <input
                   ref={PasswordRef}
                   id="password"
-                  name="password"
                   type="password"
                   autoComplete="current-password"
                   required
@@ -113,9 +108,12 @@ function SignUp() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={loading}
+                className={`w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white ${
+                  loading ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
+                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
               >
-                Sign up <ArrowRight className="w-4 h-4" />
+                {loading ? "Signing up..." : "Sign up"} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </form>

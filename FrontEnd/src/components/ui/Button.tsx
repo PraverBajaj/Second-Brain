@@ -6,6 +6,7 @@ interface ButtonProps {
   text: string;
   starticon?: ReactNode; 
   endicon?: ReactNode;
+  disabled?:boolean,
   onClick?: () => void;
 }
 
@@ -26,6 +27,7 @@ const varientstyle = {
 const Button = (props: ButtonProps) => {
   return (
     <button
+      disabled={props.disabled}
       onClick={props.onClick}
       className={`${varientstyle[props.varient]} ${defaultstyle} ${sizestyle[props.size]}`}
       aria-label={props.text}

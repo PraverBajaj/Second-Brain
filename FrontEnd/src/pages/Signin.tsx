@@ -1,12 +1,13 @@
 import axios from "axios";
 import { ArrowRight, Brain, Lock, User } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Backend_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {
   const UserRef = useRef<HTMLInputElement>(null);
   const PasswordRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
 
   async function signin(event: React.FormEvent) {
@@ -27,15 +28,19 @@ function SignIn() {
     };
 
     try {
+      setLoading(true);
       await axios.post(
         `${Backend_URL}/user/signin`,
         { username, password },
         { withCredentials: true }
       );
-
       Navigate("/dashboard");
     } catch (err: any) {
-      alert(errors[err.response?.status] || "An error occurred");
+      const errorMessage =
+        errors[err.response?.status] || "Something went wrong. Please try again.";
+      alert(errorMessage);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -107,8 +112,14 @@ function SignIn() {
               </div>
             </div>
             <div>
-              <button className="w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Sign in <ArrowRight className="w-4 h-4" />
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white ${
+                  loading ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
+                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              >
+                {loading ? "Signing in..." : "Sign in"} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </form>

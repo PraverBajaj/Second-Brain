@@ -5,60 +5,56 @@ import axios from "axios";
 import { Backend_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 
-
 interface CreateContentModelProps {
   openmode: boolean;
   closeModel: () => void;
 }
 
-const CreateContentModel = ({
-  openmode,
-  closeModel,
-}: CreateContentModelProps) => {
-  const Navigate = useNavigate();
+const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) => {
+  const navigate = useNavigate();
   const titleRef = useRef<HTMLInputElement>(null);
   const subheadingRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
   const additionalRef = useRef<HTMLTextAreaElement>(null);
 
   const [type, setType] = useState("other");
-  const [error, setError] = useState(""); // State to handle error messages
+  const [error, setError] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false); // ✅ Loading state
 
   async function submit() {
-    const title = titleRef.current?.value.trim(); // Trim whitespace from the title
+    const title = titleRef.current?.value.trim();
     const link = linkRef.current?.value.trim();
     const payload = additionalRef.current?.value.trim();
     const subheading = subheadingRef.current?.value.trim();
 
-    // Validate the title field
     if (!title) {
-      setError("Title is required"); // Set error message if title is empty
-      return; // Stop the function if title is empty
+      setError("Title is required");
+      return;
     }
 
-    try {
-      const contentData = {
-        title,
-        link,
-        payload,
-        subheading,
-        type,
-      };
+    setIsLoading(true); // ✅ Start loading
 
+    try {
+      const contentData = { title, link, payload, subheading, type };
+      
       await axios.post(`${Backend_URL}/user/addcontent`, contentData, {
         withCredentials: true,
       });
-      closeModel(); // Close the modal on successful submission
-      setError(""); // Clear any previous error messages
+
+      setIsLoading(false); // ✅ Stop loading
+      closeModel(); // Close modal on success
+      setError(""); 
     } catch (error: any) {
-      if (error.response.status === 401) {
-        Navigate("/signin");
-        alert("You are not Signed in");
+      setIsLoading(false); // ✅ Stop loading on error
+
+      if (error.response?.status === 401) {
+        navigate("/signin");
+        alert("You are not signed in");
         return;
       }
+      
       console.error("Error adding content:", error);
       alert("Failed to add content. Please try again.");
-      Navigate("/signin");
     }
   }
 
@@ -79,9 +75,7 @@ const CreateContentModel = ({
             </div>
 
             {/* Error Message */}
-            {error && (
-              <p className="text-red-500 text-sm text-center">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
             {/* Type Selection */}
             <select
@@ -97,38 +91,18 @@ const CreateContentModel = ({
             </select>
 
             {/* Inputs */}
-            <input
-              ref={titleRef}
-              className="p-2 rounded border border-gray-300"
-              type="text"
-              placeholder="Enter Title *"
-              required
-            />
-            <input
-              ref={subheadingRef}
-              className="p-2 rounded border border-gray-300"
-              type="text"
-              placeholder="Enter Subheading (Optional)"
-            />
-            <input
-              ref={linkRef}
-              className="p-2 rounded border border-gray-300"
-              type="text"
-              placeholder="Enter Link (Required for Youtube and Tweets)"
-            />
-            <textarea
-              ref={additionalRef}
-              className="p-2 rounded border border-gray-300"
-              placeholder="Additional Text (Optional)"
-              rows={3}
-            ></textarea>
+            <input ref={titleRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Title *" required />
+            <input ref={subheadingRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Subheading (Optional)" />
+            <input ref={linkRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Link (Required for YouTube and Tweets)" />
+            <textarea ref={additionalRef} className="p-2 rounded border border-gray-300" placeholder="Additional Text (Optional)" rows={3}></textarea>
 
-            {/* Submit Button */}
+            {/* Submit Button with Loading Effect */}
             <Button
               varient="primary"
-              text="Submit"
+              text={isLoading ? "Submitting..." : "Submit"} // ✅ Change text when loading
               size="sm"
               onClick={submit}
+              disabled={isLoading} // ✅ Disable button while loading
             />
           </div>
         </div>

@@ -48,7 +48,7 @@ const Dashboard = () => {
     <div className="flex relative">
       {/* Sidebar Toggle */}
       <div
-        className="md:hidden top-7 left-7 border bg-[#e1e7ff] border-[#4f39f6] rounded p-3 z-50 transition-all sidebar-toggle"
+        className="md:hidden fixed top-7 left-7 border bg-[#e1e7ff] border-[#4f39f6] rounded p-3 z-50 transition-all sidebar-toggle"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? <IoCloseSharp className="text-[#4f39f6] text-2xl" /> : <RxHamburgerMenu className="text-[#4f39f6] text-2xl" />}

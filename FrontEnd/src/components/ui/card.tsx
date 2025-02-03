@@ -1,5 +1,5 @@
 import { FaNoteSticky, FaLink, FaYoutube } from "react-icons/fa6";
-import { Tweet } from "react-twitter-widgets";  // Import Tweet widget
+import { Tweet } from "react-twitter-widgets"; // Import Tweet widget
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { MdDeleteOutline } from "react-icons/md";
 import { PiShareNetworkBold } from "react-icons/pi";
@@ -7,8 +7,6 @@ import axios from "axios";
 import { Backend_URL } from "../../config";
 import { useState } from "react";
 import Tweet3 from "../icons/tweet";
-
-
 
 interface CardProps {
   type: "tweet" | "document" | "link" | "youtube" | "other";
@@ -87,38 +85,43 @@ const Card = (props: CardProps) => {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="mt-3 text-black text-3xl font-medium">{props.Subheading}</div>
-      <div className="mt-3 text-gray-700 flex-grow">{props.payload}</div>
+      {/* Main Content Wrapper (Ensures Tweets & Videos Adjust Properly) */}
+      <div className="flex flex-col flex-grow min-h-0">
+        {/* Subheading & Payload */}
+        <div className="mt-3 text-black text-3xl font-medium">{props.Subheading}</div>
+        <div className="mt-3 text-gray-700 flex-grow">{props.payload}</div>
 
-      {/* YouTube Embed */}
-      {props.type === "youtube" && props.link && (
-        <iframe
-          className="w-full h-52 mt-3 rounded-lg"
-          src={getEmbedUrl(props.link)}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></iframe>
-      )}
+        {/* Tweet Embed */}
+        {props.type === "tweet" && props.link && getTweetId(props.link) && (
+          <div className="w-full mt-3 flex-shrink-0">
+            <Tweet tweetId={getTweetId(props.link)!} />
+          </div>
+        )}
 
-      {/* Tweet Embed */}
-      {props.type === "tweet" && props.link && getTweetId(props.link) && (
-        <div className="w-full mt-3">
-          <Tweet tweetId={getTweetId(props.link)!} />
-        </div>
-      )}
+        {/* YouTube Embed */}
+        {props.type === "youtube" && props.link && (
+          <div className="w-full mt-3 flex-shrink-0">
+            <iframe
+              className="w-full h-52 rounded-lg"
+              src={getEmbedUrl(props.link)}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
 
-      {/* External Link */}
-      {props.type === "link" && props.link && (
-        <div className="mt-3">
-          <a href={props.link} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">
-            {props.link}
-          </a>
-        </div>
-      )}
+        {/* External Link */}
+        {props.type === "link" && props.link && (
+          <div className="mt-3">
+            <a href={props.link} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">
+              {props.link}
+            </a>
+          </div>
+        )}
+      </div>
 
       {/* Footer (Always at Bottom) */}
       <div className="mt-auto pt-3 text-gray-500 text-sm border-t border-gray-200">

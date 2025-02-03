@@ -19,34 +19,26 @@ const usermodel_1 = __importDefault(require("../models/usermodel"));
 const SigninRouter = express_1.default.Router();
 SigninRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    // Validate input
-    if (!username || !password) {
-        return res.status(400).json({ error: "Username and password are required" });
-    }
     try {
         // Find user by username
         const user = yield usermodel_1.default.findOne({ username });
         if (!user || !user.password) {
             return res.status(404).json({ error: "User not found" });
         }
-        // Compare passwords
+        // Compare the provided password with the stored hashed password
         const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ error: "Invalid password" });
         }
-        // Check if JWT secret is available
-        if (!process.env.JWT_SECRET) {
-            return res.status(500).json({ error: "JWT Secret not configured" });
+        if (!(process.env.JWT_SECRET)) {
+            return res.status(401).json({ error: "Invalid Jwt Password" });
         }
-        // Generate JWT
-        const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        // Set the cookie properly
+        const token = jsonwebtoken_1.default.sign({ Id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
         return res
             .cookie("jwt", token, {
-            httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-            secure: true, // Ensures the cookie is sent only over HTTPS
-            sameSite: "none", // Required for cross-site requests (especially on iOS)
-            path: "/", // Ensures the cookie is available across the entire site
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
         })
             .status(200)
             .json({ message: "Signin successful" });

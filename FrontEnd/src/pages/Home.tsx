@@ -3,6 +3,7 @@ import { Brain, Sparkles, CloudLightning, Zap, ArrowRight } from "lucide-react";
 import Navbar from "../components/ui/Navbar";
 import FeatureCard from "../components/ui/FeatureCard";
 import { Link } from "react-router-dom";
+import Dashboardpng from "../assets/Dashboarddemo.png"
 
 function LandingPage() {
   return (
@@ -29,9 +30,9 @@ function LandingPage() {
           </div>
 
           {/* Preview Image */}
-          <div className="mt-16 rounded-xl overflow-hidden shadow-2xl border border-gray-200">
+          <div className="mt-16 rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
             <img
-              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=60"
+              src= {Dashboardpng}
               alt="Second Brain Dashboard"
               className="w-full"
             />

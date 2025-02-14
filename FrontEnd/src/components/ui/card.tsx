@@ -71,7 +71,7 @@ const Card = (props: CardProps) => {
             disabled={isLoading}
             onClick={deletedata}
             className={`flex items-center gap-2 px-3 py-1 rounded-md ${
-              isLoading ? "text-gray-400 cursor-not-allowed" : "hover:text-red-500"
+              isLoading ? "text-gray-400 cursor-not-allowed" : "hover:text-red-500 hover:cursor-pointer"
             }`}
           >
             {isLoading ? "Deleting..." : "Delete"}

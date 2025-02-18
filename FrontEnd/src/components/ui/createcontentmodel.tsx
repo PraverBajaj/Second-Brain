@@ -18,7 +18,9 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
 
   const [type, setType] = useState("other");
   const [error, setError] = useState(""); 
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [titleError, setTitleError] = useState("");
+  const [subheadingError, setSubheadingError] = useState("");
 
   async function submit() {
     const title = titleRef.current?.value.trim();
@@ -31,6 +33,12 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
       return;
     }
 
+    // Prevent submission if errors exist
+    if (titleError || subheadingError) {
+      setError("Please fix input errors before submitting.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -40,11 +48,11 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
         withCredentials: true,
       });
 
-      setIsLoading(false); 
-      closeModel(); 
-      setError(""); 
+      setIsLoading(false);
+      closeModel();
+      setError("");
     } catch (error: any) {
-      setIsLoading(false); 
+      setIsLoading(false);
 
       if (error.response?.status === 401) {
         navigate("/signin");
@@ -90,18 +98,47 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
             </select>
 
             {/* Inputs */}
-            <input maxLength={14} ref={titleRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Title *" required />
-            <input maxLength={21} ref={subheadingRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Subheading (Optional)" />
-            <input ref={linkRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Link (Required for YouTube and Tweets)" />
-            <textarea ref={additionalRef} className="p-2 rounded border border-gray-300" placeholder="Additional Text (Optional)" rows={3}></textarea>
+            <input 
+              maxLength={14} 
+              ref={titleRef} 
+              className={`p-2 rounded border ${titleError ? "border-red-500" : "border-gray-300"}`} 
+              type="text" 
+              placeholder="Enter Title *" 
+              required 
+              onChange={(e) => setTitleError(e.target.value.length > 14 ? "Max 14 characters allowed" : "")}
+            />
+            {titleError && <p className="text-red-500 text-sm">{titleError}</p>}
 
-           
+            <input 
+              maxLength={20} 
+              ref={subheadingRef} 
+              className={`p-2 rounded border ${subheadingError ? "border-red-500" : "border-gray-300"}`} 
+              type="text" 
+              placeholder="Enter Subheading (Optional)" 
+              onChange={(e) => setSubheadingError(e.target.value.length > 20 ? "Max 20 characters allowed" : "")}
+            />
+            {subheadingError && <p className="text-red-500 text-sm">{subheadingError}</p>}
+
+            <input 
+              ref={linkRef} 
+              className="p-2 rounded border border-gray-300" 
+              type="text" 
+              placeholder="Enter Link (Required for YouTube and Tweets)" 
+            />
+            
+            <textarea 
+              ref={additionalRef} 
+              className="p-2 rounded border border-gray-300" 
+              placeholder="Additional Text (Optional)" 
+              rows={3}
+            ></textarea>
+
             <Button
               varient="primary"
               text={isLoading ? "Submitting..." : "Submit"} 
               size="sm"
               onClick={submit}
-              disabled={isLoading} 
+              disabled={isLoading || !!titleError || !!subheadingError} 
             />
           </div>
         </div>

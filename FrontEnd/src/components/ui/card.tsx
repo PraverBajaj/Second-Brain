@@ -93,7 +93,6 @@ const Card = (props: CardProps) => {
           </div>
         )}
 
-        {/* YouTube Embed (Will Not Push Footer Down) */}
         {props.type === "youtube" && props.link && (
           <div className="w-full mt-3 flex-shrink-0">
             <iframe

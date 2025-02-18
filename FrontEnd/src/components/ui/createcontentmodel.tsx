@@ -90,8 +90,8 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
             </select>
 
             {/* Inputs */}
-            <input ref={titleRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Title *" required />
-            <input ref={subheadingRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Subheading (Optional)" />
+            <input maxLength={14} ref={titleRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Title *" required />
+            <input maxLength={21} ref={subheadingRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Subheading (Optional)" />
             <input ref={linkRef} className="p-2 rounded border border-gray-300" type="text" placeholder="Enter Link (Required for YouTube and Tweets)" />
             <textarea ref={additionalRef} className="p-2 rounded border border-gray-300" placeholder="Additional Text (Optional)" rows={3}></textarea>
 

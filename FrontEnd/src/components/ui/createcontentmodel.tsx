@@ -127,7 +127,7 @@ const CreateContentModel = ({
               placeholder="Enter Subheading (Optional)"
               onChange={(e) =>
                 setSubheadingError(
-                  e.target.value.length > 19 ? "Max 19 characters allowed" : ""
+                  e.target.value.length > 14 ? "Max 14 characters allowed" : ""
                 )
               }
             />

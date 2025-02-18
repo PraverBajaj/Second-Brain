@@ -9,7 +9,10 @@ interface CreateContentModelProps {
   closeModel: () => void;
 }
 
-const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) => {
+const CreateContentModel = ({
+  openmode,
+  closeModel,
+}: CreateContentModelProps) => {
   const navigate = useNavigate();
   const titleRef = useRef<HTMLInputElement>(null);
   const subheadingRef = useRef<HTMLInputElement>(null);
@@ -17,7 +20,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
   const additionalRef = useRef<HTMLTextAreaElement>(null);
 
   const [type, setType] = useState("other");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [titleError, setTitleError] = useState("");
   const [subheadingError, setSubheadingError] = useState("");
@@ -43,7 +46,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
 
     try {
       const contentData = { title, link, payload, subheading, type };
-      
+
       await axios.post(`/api/user/addcontent`, contentData, {
         withCredentials: true,
       });
@@ -59,7 +62,7 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
         alert("You are not signed in");
         return;
       }
-      
+
       console.error("Error adding content:", error);
       alert("Failed to add content. Please try again.");
     }
@@ -82,7 +85,9 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
             </div>
 
             {/* Error Message */}
-            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
 
             {/* Type Selection */}
             <select
@@ -98,47 +103,59 @@ const CreateContentModel = ({ openmode, closeModel }: CreateContentModelProps) =
             </select>
 
             {/* Inputs */}
-            <input 
-              maxLength={14} 
-              ref={titleRef} 
-              className={`p-2 rounded border ${titleError ? "border-red-500" : "border-gray-300"}`} 
-              type="text" 
-              placeholder="Enter Title *" 
-              required 
-              onChange={(e) => setTitleError(e.target.value.length > 14 ? "Max 14 characters allowed" : "")}
+            <input
+              ref={titleRef}
+              className={`p-2 rounded border ${
+                titleError ? "border-red-500" : "border-gray-300"
+              }`}
+              type="text"
+              placeholder="Enter Title *"
+              required
+              onChange={(e) =>
+                setTitleError(
+                  e.target.value.length > 14 ? "Max 14 characters allowed" : ""
+                )
+              }
             />
             {titleError && <p className="text-red-500 text-sm">{titleError}</p>}
 
-            <input 
-              maxLength={20} 
-              ref={subheadingRef} 
-              className={`p-2 rounded border ${subheadingError ? "border-red-500" : "border-gray-300"}`} 
-              type="text" 
-              placeholder="Enter Subheading (Optional)" 
-              onChange={(e) => setSubheadingError(e.target.value.length > 20 ? "Max 20 characters allowed" : "")}
+            <input
+              ref={subheadingRef}
+              className={`p-2 rounded border ${
+                subheadingError ? "border-red-500" : "border-gray-300"
+              }`}
+              type="text"
+              placeholder="Enter Subheading (Optional)"
+              onChange={(e) =>
+                setSubheadingError(
+                  e.target.value.length > 20 ? "Max 20 characters allowed" : ""
+                )
+              }
             />
-            {subheadingError && <p className="text-red-500 text-sm">{subheadingError}</p>}
+            {subheadingError && (
+              <p className="text-red-500 text-sm">{subheadingError}</p>
+            )}
 
-            <input 
-              ref={linkRef} 
-              className="p-2 rounded border border-gray-300" 
-              type="text" 
-              placeholder="Enter Link (Required for YouTube and Tweets)" 
+            <input
+              ref={linkRef}
+              className="p-2 rounded border border-gray-300"
+              type="text"
+              placeholder="Enter Link (Required for YouTube and Tweets)"
             />
-            
-            <textarea 
-              ref={additionalRef} 
-              className="p-2 rounded border border-gray-300" 
-              placeholder="Additional Text (Optional)" 
+
+            <textarea
+              ref={additionalRef}
+              className="p-2 rounded border border-gray-300"
+              placeholder="Additional Text (Optional)"
               rows={3}
             ></textarea>
 
             <Button
               varient="primary"
-              text={isLoading ? "Submitting..." : "Submit"} 
+              text={isLoading ? "Submitting..." : "Submit"}
               size="sm"
               onClick={submit}
-              disabled={isLoading || !!titleError || !!subheadingError} 
+              disabled={isLoading || !!titleError || !!subheadingError}
             />
           </div>
         </div>

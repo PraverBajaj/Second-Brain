@@ -73,7 +73,6 @@ const CreateContentModel = ({
       {openmode && (
         <div className="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center transition-all duration-300">
           <div className="flex flex-col w-96 border border-gray-300 rounded-2xl shadow-xl p-6 gap-5 bg-white">
-            {/* Header */}
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl">Add Content</h2>
               <button
@@ -102,7 +101,7 @@ const CreateContentModel = ({
               <option value="other">Other</option>
             </select>
 
-            {/* Inputs */}
+            {/* Input */}
             <input
               ref={titleRef}
               className={`p-2 rounded border ${
@@ -128,7 +127,7 @@ const CreateContentModel = ({
               placeholder="Enter Subheading (Optional)"
               onChange={(e) =>
                 setSubheadingError(
-                  e.target.value.length > 20 ? "Max 20 characters allowed" : ""
+                  e.target.value.length > 19 ? "Max 19 characters allowed" : ""
                 )
               }
             />

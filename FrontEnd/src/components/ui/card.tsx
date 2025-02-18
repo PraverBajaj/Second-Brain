@@ -80,21 +80,26 @@ const Card = (props: CardProps) => {
         </div>
       </div>
 
-      {/* Main Content Wrapper (Flexbox for Proper Layout) */}
-      <div className="flex flex-col flex-grow min-h-0 overflow-hidden">
+      {/* Main Content Wrapper (Using Grid to Avoid Misalignment) */}
+      <div className="grid grid-rows-[min-content] gap-3 flex-grow">
         {/* Subheading & Payload */}
-        <div className="mt-3 text-black text-3xl font-medium">{props.Subheading}</div>
-        <div className="mt-3 text-gray-700 flex-grow">{props.payload}</div>
+        {props.Subheading && (
+          <div className="text-black text-3xl font-medium">{props.Subheading}</div>
+        )}
+        {props.payload && (
+          <div className="text-gray-700">{props.payload}</div>
+        )}
 
-        {/* Tweet Embed (Scrollable if Long) */}
+        {/* Tweet Embed (Ensuring it Doesn't Affect Other Elements) */}
         {props.type === "tweet" && props.link && getTweetId(props.link) && (
-          <div className="w-full mt-3 flex-shrink-0 overflow-auto max-h-[400px]">
+          <div className="w-full overflow-auto">
             <Tweet tweetId={getTweetId(props.link)!} />
           </div>
         )}
 
+        {/* YouTube Embed (Now Aligned Properly) */}
         {props.type === "youtube" && props.link && (
-          <div className="w-full mt-3 flex-shrink-0">
+          <div className="w-full">
             <iframe
               className="w-full h-52 rounded-lg"
               src={getEmbedUrl(props.link)}
@@ -109,7 +114,7 @@ const Card = (props: CardProps) => {
 
         {/* External Link */}
         {props.type === "link" && props.link && (
-          <div className="mt-3">
+          <div>
             <a href={props.link} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">
               {props.link}
             </a>
@@ -124,4 +129,4 @@ const Card = (props: CardProps) => {
     </div>
   );
 };
-export default Card
+export default Card;

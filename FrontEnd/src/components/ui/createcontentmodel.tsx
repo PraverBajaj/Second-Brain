@@ -3,6 +3,7 @@ import Button from "./Button";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Backend_URL } from "../../config";
 
 interface CreateContentModelProps {
   openmode: boolean;
@@ -47,7 +48,7 @@ const CreateContentModel = ({
     try {
       const contentData = { title, link, payload, subheading, type };
 
-      await axios.post(`/api/user/addcontent`, contentData, {
+      await axios.post(`${Backend_URL}/user/addcontent`, contentData, {
         withCredentials: true,
       });
 

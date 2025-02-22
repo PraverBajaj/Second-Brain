@@ -17,7 +17,7 @@ const delete_1 = __importDefault(require("./routes/delete"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: "https://second-brain-rust.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true,
 }));
 app.use(express_1.default.json());

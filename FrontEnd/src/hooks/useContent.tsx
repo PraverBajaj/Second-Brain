@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Backend_URL } from "../config";
 export function useContent() {
   const [contents, setContents] = useState([]);
 
   const fetchContent = async () => {
     try {
-      const response = await axios.get(`/api/user/getcontent`, {
+      const response = await axios.get(`${Backend_URL}/user/getcontent`, {
         withCredentials: true,
       });
       setContents(response.data.Content);

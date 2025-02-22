@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowRight, Brain, Lock, User } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Backend_URL } from "../config";
 
 function SignIn() {
   const UserRef = useRef<HTMLInputElement>(null);
@@ -29,7 +30,7 @@ function SignIn() {
     try {
       setLoading(true);
       await axios.post(
-        `/api/user/signin`,
+        `${Backend_URL}/user/signin`,
         { username, password },
         { withCredentials: true }
       );

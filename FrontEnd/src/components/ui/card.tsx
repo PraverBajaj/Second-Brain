@@ -5,6 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import axios from "axios";
 import { useState } from "react";
 import Tweet3 from "../icons/tweet";
+import { Backend_URL } from "../../config";
 
 interface CardProps {
   type: "tweet" | "document" | "link" | "youtube" | "other";
@@ -43,7 +44,7 @@ const Card = (props: CardProps) => {
   async function deletedata() {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/user/deletecontent`, {
+      await axios.delete(`${Backend_URL}/user/deletecontent`, {
         data: { title: props.title },
         withCredentials: true,
       });
@@ -56,7 +57,7 @@ const Card = (props: CardProps) => {
   }
 
   return (
-    <div className="w-full max-w-[380px] border border-gray-200 rounded-xl shadow bg-white p-5 flex flex-col h-full">
+    <div className="w-full overflow-auto border border-gray-200 rounded-xl shadow bg-white p-5 flex flex-col h-full">
       {/* Header: Icon + Title + Actions */}
       <div className="flex items-center justify-between">
         {/* Icon & Title */}
@@ -92,7 +93,7 @@ const Card = (props: CardProps) => {
 
         {/* Tweet Embed (Ensuring it Doesn't Affect Other Elements) */}
         {props.type === "tweet" && props.link && getTweetId(props.link) && (
-          <div className="w-full overflow-auto">
+          <div className=" w-full overflow-auto">
             <Tweet tweetId={getTweetId(props.link)!} />
           </div>
         )}

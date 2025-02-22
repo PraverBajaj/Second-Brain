@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowRight, Brain, Lock, User } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Backend_URL } from "../config";
 
 function SignUp() {
   const UserRef = useRef<HTMLInputElement>(null);
@@ -22,7 +23,7 @@ function SignUp() {
 
     setLoading(true);
     try {
-      await axios.post(`/api/user/signup`, { username, password });
+      await axios.post(`${Backend_URL}/user/signup`, { username, password });
       alert("You have signed up successfully!");
       navigate("/signin");
     } catch (err: any) {

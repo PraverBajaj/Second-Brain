@@ -35,13 +35,16 @@ cd second-brain
 #### **Backend Setup**
 Modify the **CORS middleware** in `backend/index.ts` to set the correct frontend URL:
 ```ts
-app.use(cors({ origin: "http://your-frontend-url.com" }));
+app.use(cors({
+    origin: "https://second-brain-rust.vercel.app", // add your frontend url here 
+    credentials: true,
+}));
 ```
 
 #### **Frontend Setup**
 Update the **backend URL** in `frontend/config.ts`:
 ```ts
-export const API_URL = "http://your-backend-url.com";
+export const Backend_URL = "/api";
 ```
 
 ### 3. Install Dependencies
@@ -57,7 +60,14 @@ cd backend
 npm install
 ```
 
-### 4. Run the Project
+### 4. Set Up Environment Variables
+Create a `.env` file in the `backend` directory based on `.env.example` and set the required values:
+```
+JWT_SECRET=
+MongoUrl=
+```
+
+### 5. Run the Project
 #### **Frontend**
 ```sh
 npm run dev
@@ -70,3 +80,4 @@ npm run dev
 
 ## Contributing
 Feel free to submit issues or open pull requests to improve **Second Brain**!
+

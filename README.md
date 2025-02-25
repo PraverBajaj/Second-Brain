@@ -1,4 +1,4 @@
-# Second Brain - A Smart Content Organizer for FOSS Hack 2025
+# Second Brain - A Smart Content Organizer
 
 ## Introduction
 
@@ -20,7 +20,7 @@ In today's digital era, information is scattered across multiple platforms—Twi
 ## Tech Stack
 
 - **Frontend:** React (TypeScript) + TailwindCSS
-- **Backend:** Node.js + Express.js + WebSockets
+- **Backend:** Node.js + Express.js
 - **Database:** MongoDB
 
 ## Setup Instructions
